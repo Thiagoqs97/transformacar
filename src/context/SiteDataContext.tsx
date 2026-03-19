@@ -145,8 +145,8 @@ const defaultSettings: SiteSettings = {
   email: 'contato@transformacarautos.com.br',
   address: 'Avenida Governador Gayoso e Almendra, 604 - São Cristóvão',
   city: 'Teresina - PI',
-  googleMapsUrl: 'https://maps.app.goo.gl/QeQc2e6Z1vXy4Y7M8',
-  googleMapsEmbed: 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15896.724514417714!2d-42.7945026!3d-5.0743731!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x78e3b00325052f3%3A0x5bc5ffec2eb1e7ae!2sTransformacar%20Autos%20%7C%20Venda%20de%20ve%C3%ADculos%20em%20Teresina!5e0!3m2!1spt-BR!2sbr!4v1743602048165!5m2!1spt-BR!2sbr',
+  googleMapsUrl: 'https://maps.app.goo.gl/LUk63yoqjjxEUDPs8',
+  googleMapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.5576425857407!2d-42.7757295!3d-5.081648400000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x78e3b877c38b291%3A0xb640b001ab056b6!2sHOLANDA%20VE%C3%8DCULOS!5e1!3m2!1spt-BR!2sbr!4v1773959806320!5m2!1spt-BR!2sbr',
   instagramFollowers: '150k seguidores',
   instagramUrl: '#',
   youtubeSubscribers: '85k inscritos',
@@ -188,11 +188,18 @@ function loadData(): SiteData {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      // Migration: force new logo if they still have the old one
+      // Migration: force new logo and maps if they still have the old ones
+      let needsSave = false;
       if (parsed?.settings?.logoUrl === 'https://zngosfnoajpqzxrgwrtw.supabase.co/storage/v1/object/public/Catalogo/Captura-de-tela-2025-02-10-172638-1-Photoroom.jpg') {
         parsed.settings.logoUrl = 'https://zngosfnoajpqzxrgwrtw.supabase.co/storage/v1/object/public/Catalogo/605537257_18543366532060573_4860781397018855714_n.jpg';
-        saveData(parsed);
+        needsSave = true;
       }
+      if (parsed?.settings?.googleMapsUrl === 'https://maps.app.goo.gl/QeQc2e6Z1vXy4Y7M8') {
+        parsed.settings.googleMapsUrl = 'https://maps.app.goo.gl/LUk63yoqjjxEUDPs8';
+        parsed.settings.googleMapsEmbed = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.5576425857407!2d-42.7757295!3d-5.081648400000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x78e3b877c38b291%3A0xb640b001ab056b6!2sHOLANDA%20VE%C3%8DCULOS!5e1!3m2!1spt-BR!2sbr!4v1773959806320!5m2!1spt-BR!2sbr';
+        needsSave = true;
+      }
+      if (needsSave) saveData(parsed);
       return parsed;
     }
   } catch { /* ignore */ }
