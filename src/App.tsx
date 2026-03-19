@@ -10,7 +10,7 @@ export default function App() {
   return (
     <SiteDataProvider>
       <Router>
-        <div className="min-h-screen bg-white text-[#021631] font-sans selection:bg-[#fcbc17] selection:text-[#021631] flex flex-col">
+        <div className="min-h-screen bg-white text-[#003399] font-sans selection:bg-[#E31E24] selection:text-[#003399] flex flex-col">
           <Header />
           <div className="flex-grow">
             <Routes>

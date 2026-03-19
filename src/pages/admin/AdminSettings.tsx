@@ -17,8 +17,8 @@ export default function AdminSettings() {
     setSettings(prev => ({ ...prev, [field]: value }));
   };
 
-  const inputCls = "w-full bg-gray-50 border border-[#021631]/15 rounded-lg px-4 py-2.5 text-[#021631] text-sm focus:outline-none focus:border-[#fcbc17] focus:bg-white transition-colors";
-  const labelCls = "block text-[#021631]/50 text-xs font-bold uppercase tracking-wider mb-2";
+  const inputCls = "w-full bg-gray-50 border border-[#003399]/15 rounded-lg px-4 py-2.5 text-[#003399] text-sm focus:outline-none focus:border-[#E31E24] focus:bg-white transition-colors";
+  const labelCls = "block text-[#003399]/50 text-xs font-bold uppercase tracking-wider mb-2";
 
   const sections = [
     {
@@ -87,28 +87,28 @@ export default function AdminSettings() {
     <div className="space-y-6 max-w-4xl">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-[#021631]">Configurações do Site</h2>
-          <p className="text-[#021631]/50 text-sm">Edite textos, estatísticas, contato e redes sociais.</p>
+          <h2 className="text-2xl font-bold text-[#003399]">Configurações do Site</h2>
+          <p className="text-[#003399]/50 text-sm">Edite textos, estatísticas, contato e redes sociais.</p>
         </div>
         <button onClick={handleSave} disabled={saved}
           className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md ${
-            saved ? 'bg-green-500 text-white' : 'bg-[#fcbc17] text-[#021631] hover:bg-[#fcbc17]/90'
+            saved ? 'bg-green-500 text-white' : 'bg-[#E31E24] text-[#003399] hover:bg-[#E31E24]/90'
           }`}>
           {saved ? <><Check className="w-4 h-4" /> Salvo!</> : <><Save className="w-4 h-4" /> Salvar Alterações</>}
         </button>
       </div>
 
       {sections.map((section, idx) => (
-        <div key={idx} className="bg-white border border-[#021631]/10 rounded-xl p-6 shadow-sm hover:border-[#fcbc17]/40 transition-colors">
-          <h3 className="text-[#021631] font-bold text-lg mb-1">{section.title}</h3>
-          <p className="text-[#021631]/40 text-sm mb-6">{section.description}</p>
+        <div key={idx} className="bg-white border border-[#003399]/10 rounded-xl p-6 shadow-sm hover:border-[#E31E24]/40 transition-colors">
+          <h3 className="text-[#003399] font-bold text-lg mb-1">{section.title}</h3>
+          <p className="text-[#003399]/40 text-sm mb-6">{section.description}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {section.fields.map(field => (
               <div key={field.key} className={'textarea' in field && field.textarea ? 'sm:col-span-2' : ''}>
                 <label className={labelCls}>{field.label}</label>
                 {'textarea' in field && field.textarea ? (
                   <textarea value={settings[field.key]} onChange={e => update(field.key, e.target.value)} rows={3}
-                    className="w-full bg-gray-50 border border-[#021631]/15 rounded-lg px-4 py-2.5 text-[#021631] text-sm focus:outline-none focus:border-[#fcbc17] focus:bg-white transition-colors resize-none"
+                    className="w-full bg-gray-50 border border-[#003399]/15 rounded-lg px-4 py-2.5 text-[#003399] text-sm focus:outline-none focus:border-[#E31E24] focus:bg-white transition-colors resize-none"
                     placeholder={field.placeholder} />
                 ) : (
                   <input type="text" value={settings[field.key]} onChange={e => update(field.key, e.target.value)}

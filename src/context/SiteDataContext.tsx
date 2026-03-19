@@ -130,7 +130,7 @@ const defaultTestimonials: Testimonial[] = [
 
 const defaultSettings: SiteSettings = {
   heroImage: 'https://zngosfnoajpqzxrgwrtw.supabase.co/storage/v1/object/public/Catalogo/1580846b6906f6259148.jpg',
-  logoUrl: 'https://zngosfnoajpqzxrgwrtw.supabase.co/storage/v1/object/public/Catalogo/Captura-de-tela-2025-02-10-172638-1-Photoroom.jpg',
+  logoUrl: 'https://zngosfnoajpqzxrgwrtw.supabase.co/storage/v1/object/public/Catalogo/605537257_18543366532060573_4860781397018855714_n.jpg',
   featuredVehicleImage: 'https://s3.amazonaws.com/altimus2.arquivos.prod/0a00ec6f-b26d-4aa0-ad12-6603691e6d00/fotos/veiculo/07283ed81f1448b1aeb6e48a9060e439_1754418270271.jpg',
   featuredVehicleTitle: 'Conheça Nosso Showroom',
   featuredVehicleDescription: 'Visite a loja mais famosa do Brasil e conheça de perto os veículos mais exclusivos do mercado. Nossa equipe de especialistas está pronta para ajudá-lo a encontrar o carro perfeito.',
@@ -187,7 +187,13 @@ function loadData(): SiteData {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
-      return JSON.parse(saved);
+      const parsed = JSON.parse(saved);
+      // Migration: force new logo if they still have the old one
+      if (parsed?.settings?.logoUrl === 'https://zngosfnoajpqzxrgwrtw.supabase.co/storage/v1/object/public/Catalogo/Captura-de-tela-2025-02-10-172638-1-Photoroom.jpg') {
+        parsed.settings.logoUrl = 'https://zngosfnoajpqzxrgwrtw.supabase.co/storage/v1/object/public/Catalogo/605537257_18543366532060573_4860781397018855714_n.jpg';
+        saveData(parsed);
+      }
+      return parsed;
     }
   } catch { /* ignore */ }
   return {

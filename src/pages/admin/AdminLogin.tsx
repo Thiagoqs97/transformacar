@@ -17,13 +17,13 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-[#021631] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#003399] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
           {/* Logo */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-[#fcbc17] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#fcbc17]/20">
-              <Lock className="w-8 h-8 text-[#021631]" />
+            <div className="w-16 h-16 bg-[#E31E24] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#E31E24]/20">
+              <Lock className="w-8 h-8 text-[#003399]" />
             </div>
             <h1 className="text-2xl font-bold text-white mb-1">Painel Administrativo</h1>
             <p className="text-white/50 text-sm">Transformacar Autos</p>
@@ -41,7 +41,7 @@ export default function AdminLogin() {
                   value={password}
                   onChange={(e) => { setPassword(e.target.value); setError(''); }}
                   placeholder="Digite a senha..."
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-[#fcbc17] focus:ring-1 focus:ring-[#fcbc17]/50 transition-all pr-12"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-[#E31E24] focus:ring-1 focus:ring-[#E31E24]/50 transition-all pr-12"
                   autoFocus
                 />
                 <button
@@ -62,7 +62,7 @@ export default function AdminLogin() {
 
             <button
               type="submit"
-              className="w-full bg-[#fcbc17] text-[#021631] font-bold py-3 rounded-lg hover:bg-[#fcbc17]/90 transition-all shadow-lg shadow-[#fcbc17]/20 uppercase tracking-wider text-sm"
+              className="w-full bg-[#E31E24] text-[#003399] font-bold py-3 rounded-lg hover:bg-[#E31E24]/90 transition-all shadow-lg shadow-[#E31E24]/20 uppercase tracking-wider text-sm"
             >
               Entrar
             </button>

@@ -8,9 +8,9 @@ const emptyVehicle: Omit<Vehicle, 'id'> = {
   description: '', featured: false,
 };
 
-const inputCls = "w-full bg-gray-50 border border-[#021631]/15 rounded-lg px-4 py-2.5 text-[#021631] text-sm focus:outline-none focus:border-[#fcbc17] focus:bg-white transition-colors placeholder-[#021631]/30";
-const selectCls = "w-full bg-gray-50 border border-[#021631]/15 rounded-lg px-4 py-2.5 text-[#021631] text-sm focus:outline-none focus:border-[#fcbc17] transition-colors";
-const labelCls = "block text-[#021631]/50 text-xs font-bold uppercase tracking-wider mb-2";
+const inputCls = "w-full bg-gray-50 border border-[#003399]/15 rounded-lg px-4 py-2.5 text-[#003399] text-sm focus:outline-none focus:border-[#E31E24] focus:bg-white transition-colors placeholder-[#003399]/30";
+const selectCls = "w-full bg-gray-50 border border-[#003399]/15 rounded-lg px-4 py-2.5 text-[#003399] text-sm focus:outline-none focus:border-[#E31E24] transition-colors";
+const labelCls = "block text-[#003399]/50 text-xs font-bold uppercase tracking-wider mb-2";
 
 export default function AdminVehicles() {
   const { data, addVehicle, updateVehicle, deleteVehicle } = useSiteData();
@@ -56,50 +56,50 @@ export default function AdminVehicles() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-[#021631]">Veículos do Estoque</h2>
-          <p className="text-[#021631]/50 text-sm">{data.vehicles.length} veículos cadastrados</p>
+          <h2 className="text-2xl font-bold text-[#003399]">Veículos do Estoque</h2>
+          <p className="text-[#003399]/50 text-sm">{data.vehicles.length} veículos cadastrados</p>
         </div>
         <button onClick={openNew}
-          className="flex items-center gap-2 bg-[#fcbc17] text-[#021631] px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-[#fcbc17]/90 transition-all shadow-md">
+          className="flex items-center gap-2 bg-[#E31E24] text-[#003399] px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-[#E31E24]/90 transition-all shadow-md">
           <Plus className="w-4 h-4" /> Adicionar Veículo
         </button>
       </div>
 
       {/* Search */}
       <div className="relative">
-        <Search className="w-4 h-4 text-[#021631]/30 absolute left-4 top-1/2 -translate-y-1/2" />
+        <Search className="w-4 h-4 text-[#003399]/30 absolute left-4 top-1/2 -translate-y-1/2" />
         <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}
           placeholder="Buscar por marca ou modelo..."
-          className="w-full bg-white border border-[#021631]/15 rounded-xl px-4 py-3 pl-11 text-[#021631] placeholder-[#021631]/30 text-sm focus:outline-none focus:border-[#fcbc17] transition-colors shadow-sm" />
+          className="w-full bg-white border border-[#003399]/15 rounded-xl px-4 py-3 pl-11 text-[#003399] placeholder-[#003399]/30 text-sm focus:outline-none focus:border-[#E31E24] transition-colors shadow-sm" />
       </div>
 
       {/* Vehicle Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {filtered.map(v => (
-          <div key={v.id} className="bg-white border border-[#021631]/10 rounded-xl overflow-hidden hover:border-[#fcbc17]/50 hover:shadow-md transition-all group shadow-sm">
+          <div key={v.id} className="bg-white border border-[#003399]/10 rounded-xl overflow-hidden hover:border-[#E31E24]/50 hover:shadow-md transition-all group shadow-sm">
             <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
               <img src={v.image} alt={v.model} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
               {v.featured && (
-                <span className="absolute top-3 left-3 bg-[#fcbc17] text-[#021631] px-2 py-1 rounded-lg text-xs font-bold">⭐ Destaque</span>
+                <span className="absolute top-3 left-3 bg-[#E31E24] text-[#003399] px-2 py-1 rounded-lg text-xs font-bold">⭐ Destaque</span>
               )}
             </div>
             <div className="p-4">
-              <p className="text-[#021631]/40 text-xs font-bold uppercase tracking-wider">{v.brand}</p>
-              <h3 className="text-[#021631] font-bold truncate">{v.model}</h3>
-              <div className="flex items-center gap-2 text-[#021631]/40 text-xs mt-1">
+              <p className="text-[#003399]/40 text-xs font-bold uppercase tracking-wider">{v.brand}</p>
+              <h3 className="text-[#003399] font-bold truncate">{v.model}</h3>
+              <div className="flex items-center gap-2 text-[#003399]/40 text-xs mt-1">
                 <span>{v.year}</span>
-                <span className="w-1 h-1 bg-[#021631]/20 rounded-full"></span>
+                <span className="w-1 h-1 bg-[#003399]/20 rounded-full"></span>
                 <span>{v.km}</span>
               </div>
-              <div className="flex items-center justify-between mt-4 pt-3 border-t border-[#021631]/10">
-                <span className="text-[#fcbc17] font-bold text-sm">{v.price}</span>
+              <div className="flex items-center justify-between mt-4 pt-3 border-t border-[#003399]/10">
+                <span className="text-[#E31E24] font-bold text-sm">{v.price}</span>
                 <div className="flex items-center gap-2">
                   <button onClick={() => openEdit(v)}
-                    className="w-8 h-8 rounded-lg bg-gray-50 border border-[#021631]/10 flex items-center justify-center text-[#021631]/40 hover:text-[#fcbc17] hover:border-[#fcbc17]/50 transition-all">
+                    className="w-8 h-8 rounded-lg bg-gray-50 border border-[#003399]/10 flex items-center justify-center text-[#003399]/40 hover:text-[#E31E24] hover:border-[#E31E24]/50 transition-all">
                     <Edit2 className="w-3.5 h-3.5" />
                   </button>
                   <button onClick={() => setConfirmDelete(v.id)}
-                    className="w-8 h-8 rounded-lg bg-gray-50 border border-[#021631]/10 flex items-center justify-center text-[#021631]/40 hover:text-red-500 hover:border-red-300 transition-all">
+                    className="w-8 h-8 rounded-lg bg-gray-50 border border-[#003399]/10 flex items-center justify-center text-[#003399]/40 hover:text-red-500 hover:border-red-300 transition-all">
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -110,22 +110,22 @@ export default function AdminVehicles() {
       </div>
 
       {filtered.length === 0 && (
-        <div className="text-center py-16 bg-white rounded-xl border border-[#021631]/10">
-          <p className="text-[#021631]/40">Nenhum veículo encontrado.</p>
+        <div className="text-center py-16 bg-white rounded-xl border border-[#003399]/10">
+          <p className="text-[#003399]/40">Nenhum veículo encontrado.</p>
         </div>
       )}
 
       {/* Delete Confirm Modal */}
       {confirmDelete !== null && (
         <div className="fixed inset-0 bg-black/40 z-[60] flex items-center justify-center px-4" onClick={() => setConfirmDelete(null)}>
-          <div className="bg-white border border-[#021631]/10 rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl" onClick={e => e.stopPropagation()}>
+          <div className="bg-white border border-[#003399]/10 rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl" onClick={e => e.stopPropagation()}>
             <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
               <Trash2 className="w-7 h-7 text-red-500" />
             </div>
-            <h3 className="text-[#021631] text-lg font-bold mb-2">Confirmar exclusão?</h3>
-            <p className="text-[#021631]/50 text-sm mb-6">Esta ação não pode ser desfeita.</p>
+            <h3 className="text-[#003399] text-lg font-bold mb-2">Confirmar exclusão?</h3>
+            <p className="text-[#003399]/50 text-sm mb-6">Esta ação não pode ser desfeita.</p>
             <div className="flex gap-3">
-              <button onClick={() => setConfirmDelete(null)} className="flex-1 py-2.5 rounded-xl border border-[#021631]/15 text-[#021631]/60 hover:text-[#021631] hover:border-[#021631]/30 transition-all text-sm font-medium">Cancelar</button>
+              <button onClick={() => setConfirmDelete(null)} className="flex-1 py-2.5 rounded-xl border border-[#003399]/15 text-[#003399]/60 hover:text-[#003399] hover:border-[#003399]/30 transition-all text-sm font-medium">Cancelar</button>
               <button onClick={() => { deleteVehicle(confirmDelete); setConfirmDelete(null); }} className="flex-1 py-2.5 rounded-xl bg-red-500 text-white hover:bg-red-600 transition-all text-sm font-bold">Excluir</button>
             </div>
           </div>
@@ -135,10 +135,10 @@ export default function AdminVehicles() {
       {/* Edit / New Modal */}
       {showForm && editing && (
         <div className="fixed inset-0 bg-black/40 z-[60] flex items-start justify-center overflow-y-auto py-8 px-4">
-          <div className="bg-white border border-[#021631]/10 rounded-2xl p-6 lg:p-8 max-w-3xl w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+          <div className="bg-white border border-[#003399]/10 rounded-2xl p-6 lg:p-8 max-w-3xl w-full shadow-2xl" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-[#021631]">{isNew ? 'Novo Veículo' : 'Editar Veículo'}</h3>
-              <button onClick={() => { setShowForm(false); setEditing(null); }} className="text-[#021631]/40 hover:text-[#021631] transition-colors">
+              <h3 className="text-xl font-bold text-[#003399]">{isNew ? 'Novo Veículo' : 'Editar Veículo'}</h3>
+              <button onClick={() => { setShowForm(false); setEditing(null); }} className="text-[#003399]/40 hover:text-[#003399] transition-colors">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -149,7 +149,7 @@ export default function AdminVehicles() {
                 <label className={labelCls}>Imagem Principal (URL)</label>
                 <input type="text" value={editing.image} onChange={e => updateField('image', e.target.value)} className={inputCls} placeholder="https://..." />
                 {editing.image && (
-                  <img src={editing.image} alt="Preview" className="mt-2 h-32 object-cover rounded-lg border border-[#021631]/10" referrerPolicy="no-referrer" />
+                  <img src={editing.image} alt="Preview" className="mt-2 h-32 object-cover rounded-lg border border-[#003399]/10" referrerPolicy="no-referrer" />
                 )}
               </div>
 
@@ -194,19 +194,19 @@ export default function AdminVehicles() {
               <div>
                 <label className={labelCls}>Descrição</label>
                 <textarea value={editing.description} onChange={e => updateField('description', e.target.value)} rows={3}
-                  className="w-full bg-gray-50 border border-[#021631]/15 rounded-lg px-4 py-2.5 text-[#021631] text-sm focus:outline-none focus:border-[#fcbc17] focus:bg-white transition-colors resize-none"
+                  className="w-full bg-gray-50 border border-[#003399]/15 rounded-lg px-4 py-2.5 text-[#003399] text-sm focus:outline-none focus:border-[#E31E24] focus:bg-white transition-colors resize-none"
                   placeholder="Descreva o veículo..." />
               </div>
 
               {/* Destaque toggle */}
-              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-[#021631]/10">
+              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-[#003399]/10">
                 <button onClick={() => updateField('featured', !editing.featured)}
-                  className={`w-10 h-6 rounded-full transition-colors relative ${editing.featured ? 'bg-[#fcbc17]' : 'bg-[#021631]/20'}`}>
+                  className={`w-10 h-6 rounded-full transition-colors relative ${editing.featured ? 'bg-[#E31E24]' : 'bg-[#003399]/20'}`}>
                   <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-md transition-transform ${editing.featured ? 'left-[18px]' : 'left-0.5'}`} />
                 </button>
                 <div className="flex items-center gap-2">
-                  {editing.featured ? <Star className="w-4 h-4 text-[#fcbc17]" /> : <StarOff className="w-4 h-4 text-[#021631]/30" />}
-                  <span className="text-[#021631] text-sm font-medium">{editing.featured ? 'Veículo em destaque na Home' : 'Não está em destaque'}</span>
+                  {editing.featured ? <Star className="w-4 h-4 text-[#E31E24]" /> : <StarOff className="w-4 h-4 text-[#003399]/30" />}
+                  <span className="text-[#003399] text-sm font-medium">{editing.featured ? 'Veículo em destaque na Home' : 'Não está em destaque'}</span>
                 </div>
               </div>
 
@@ -217,14 +217,14 @@ export default function AdminVehicles() {
                   <input type="text" value={newImageUrl} onChange={e => setNewImageUrl(e.target.value)}
                     className={inputCls} placeholder="Cole a URL da imagem..."
                     onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addImage(); }}} />
-                  <button onClick={addImage} className="px-4 py-2.5 bg-[#fcbc17] text-[#021631] rounded-lg text-sm font-bold hover:bg-[#fcbc17]/90 transition-colors">
+                  <button onClick={addImage} className="px-4 py-2.5 bg-[#E31E24] text-[#003399] rounded-lg text-sm font-bold hover:bg-[#E31E24]/90 transition-colors">
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
                 {editing.images.length > 0 && (
                   <div className="grid grid-cols-4 gap-2">
                     {editing.images.map((img, idx) => (
-                      <div key={idx} className="relative group aspect-square rounded-lg overflow-hidden border border-[#021631]/10">
+                      <div key={idx} className="relative group aspect-square rounded-lg overflow-hidden border border-[#003399]/10">
                         <img src={img} alt={`Foto ${idx + 1}`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                         <button onClick={() => removeImage(idx)}
                           className="absolute top-1 right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -237,13 +237,13 @@ export default function AdminVehicles() {
               </div>
 
               {/* Ações */}
-              <div className="flex gap-3 pt-4 border-t border-[#021631]/10">
+              <div className="flex gap-3 pt-4 border-t border-[#003399]/10">
                 <button onClick={() => { setShowForm(false); setEditing(null); }}
-                  className="flex-1 py-3 rounded-xl border border-[#021631]/15 text-[#021631]/60 hover:text-[#021631] hover:border-[#021631]/30 transition-all text-sm font-medium">
+                  className="flex-1 py-3 rounded-xl border border-[#003399]/15 text-[#003399]/60 hover:text-[#003399] hover:border-[#003399]/30 transition-all text-sm font-medium">
                   Cancelar
                 </button>
                 <button onClick={handleSave}
-                  className="flex-1 py-3 rounded-xl bg-[#fcbc17] text-[#021631] font-bold text-sm hover:bg-[#fcbc17]/90 transition-all flex items-center justify-center gap-2 shadow-md">
+                  className="flex-1 py-3 rounded-xl bg-[#E31E24] text-[#003399] font-bold text-sm hover:bg-[#E31E24]/90 transition-all flex items-center justify-center gap-2 shadow-md">
                   <Save className="w-4 h-4" /> {isNew ? 'Adicionar' : 'Salvar Alterações'}
                 </button>
               </div>
