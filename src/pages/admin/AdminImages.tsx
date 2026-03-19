@@ -1,0 +1,105 @@
+import { useState } from 'react';
+import { useSiteData } from '../../context/SiteDataContext';
+import { Save, RefreshCw, Check } from 'lucide-react';
+
+export default function AdminImages() {
+  const { data, updateSettings } = useSiteData();
+  const [settings, setSettings] = useState(data.settings);
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = () => {
+    updateSettings(settings);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  const handleReset = (field: keyof typeof settings, defaultValue: string) => {
+    setSettings(prev => ({ ...prev, [field]: defaultValue }));
+  };
+
+  const update = (field: keyof typeof settings, value: string) => {
+    setSettings(prev => ({ ...prev, [field]: value }));
+  };
+
+  const imageFields = [
+    {
+      key: 'heroImage' as const,
+      label: 'Hero Banner (Topo da Home)',
+      description: 'Imagem principal do topo do site. Recomendado: 1920x900px',
+      default: 'https://zngosfnoajpqzxrgwrtw.supabase.co/storage/v1/object/public/Catalogo/1580846b6906f6259148.jpg',
+    },
+    {
+      key: 'logoUrl' as const,
+      label: 'Logo do Site',
+      description: 'Logo exibida no header e footer. Recomendado: fundo transparente PNG',
+      default: 'https://zngosfnoajpqzxrgwrtw.supabase.co/storage/v1/object/public/Catalogo/Captura-de-tela-2025-02-10-172638-1-Photoroom.jpg',
+    },
+    {
+      key: 'featuredVehicleImage' as const,
+      label: 'Imagem do Veículo em Destaque',
+      description: 'Imagem exibida na seção "Veículo em Destaque" da Home',
+      default: 'https://s3.amazonaws.com/altimus2.arquivos.prod/0a00ec6f-b26d-4aa0-ad12-6603691e6d00/fotos/veiculo/07283ed81f1448b1aeb6e48a9060e439_1754418270271.jpg',
+    },
+  ];
+
+  return (
+    <div className="space-y-6 max-w-4xl">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-white">Imagens do Site</h2>
+          <p className="text-white/50 text-sm">Altere as imagens principais exibidas no site.</p>
+        </div>
+        <button
+          onClick={handleSave}
+          disabled={saved}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg ${
+            saved
+              ? 'bg-green-500 text-white shadow-green-500/20'
+              : 'bg-[#fcbc17] text-[#021631] hover:bg-[#fcbc17]/90 shadow-[#fcbc17]/20'
+          }`}
+        >
+          {saved ? <><Check className="w-4 h-4" /> Salvo!</> : <><Save className="w-4 h-4" /> Salvar Alterações</>}
+        </button>
+      </div>
+
+      <div className="space-y-6">
+        {imageFields.map(field => (
+          <div key={field.key} className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-white/20 transition-colors">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-white font-bold">{field.label}</h3>
+                <p className="text-white/40 text-sm mt-1">{field.description}</p>
+              </div>
+              <button
+                onClick={() => handleReset(field.key, field.default)}
+                className="flex items-center gap-1 text-white/40 hover:text-white/60 text-xs font-medium transition-colors"
+                title="Restaurar padrão"
+              >
+                <RefreshCw className="w-3 h-3" /> Padrão
+              </button>
+            </div>
+
+            <input
+              type="text"
+              value={settings[field.key]}
+              onChange={(e) => update(field.key, e.target.value)}
+              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#fcbc17] transition-colors mb-4"
+              placeholder="https://..."
+            />
+
+            {settings[field.key] && (
+              <div className="relative rounded-lg overflow-hidden bg-white/5 border border-white/5">
+                <img
+                  src={settings[field.key]}
+                  alt={field.label}
+                  className={`w-full object-cover ${field.key === 'logoUrl' ? 'h-24 object-contain bg-gray-100 p-2' : 'h-48'}`}
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
