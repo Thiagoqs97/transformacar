@@ -10,24 +10,17 @@ export default function App() {
   return (
     <SiteDataProvider>
       <Router>
-        <Routes>
-          {/* Admin route - no header/footer */}
-          <Route path="/admin" element={<AdminPage />} />
-          
-          {/* Public routes */}
-          <Route path="*" element={
-            <div className="min-h-screen bg-white text-[#021631] font-sans selection:bg-[#fcbc17] selection:text-[#021631] flex flex-col">
-              <Header />
-              <div className="flex-grow">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/estoque" element={<Estoque />} />
-                </Routes>
-              </div>
-              <Footer />
-            </div>
-          } />
-        </Routes>
+        <div className="min-h-screen bg-white text-[#021631] font-sans selection:bg-[#fcbc17] selection:text-[#021631] flex flex-col">
+          <Header />
+          <div className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/estoque" element={<Estoque />} />
+              <Route path="/admin" element={<AdminPage />} />
+            </Routes>
+          </div>
+          <Footer />
+        </div>
       </Router>
     </SiteDataProvider>
   );

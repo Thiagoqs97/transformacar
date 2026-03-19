@@ -1,4 +1,4 @@
-import { ChevronRight, Filter, Search } from 'lucide-react';
+import { ChevronRight, Filter, Search, X } from 'lucide-react';
 import { useSiteData } from '../context/SiteDataContext';
 import { useState } from 'react';
 
@@ -6,6 +6,7 @@ export default function Estoque() {
   const { data } = useSiteData();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('TODOS');
+  const [showFilters, setShowFilters] = useState(false);
 
   const categories = ['TODOS', 'BLINDADO', 'ELÉTRICO', 'ESPORTIVO', 'FAMÍLIA', 'OFFROAD'];
 
@@ -16,42 +17,57 @@ export default function Estoque() {
   });
 
   return (
-    <main className="bg-gray-50 min-h-screen pb-24">
+    <main className="bg-gray-50 min-h-screen pb-16 sm:pb-24">
       {/* Page Header */}
-      <div className="bg-[#021631] text-white py-16">
-        <div className="container mx-auto px-6">
+      <div className="bg-[#021631] text-white py-10 sm:py-16">
+        <div className="container mx-auto px-4 sm:px-6">
           <span className="text-[#fcbc17] text-xs font-bold tracking-widest uppercase mb-2 block">Nosso Estoque</span>
-          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Veículos Disponíveis</h1>
-          <p className="text-white/70">Explore nossa seleção de veículos de luxo e importados.</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 sm:mb-4">Veículos Disponíveis</h1>
+          <p className="text-white/70 text-sm sm:text-base">Explore nossa seleção de veículos de luxo e importados.</p>
         </div>
       </div>
 
       {/* Filters Bar */}
-      <div className="bg-white border-b border-[#021631]/10 sticky top-24 z-40">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div className="flex items-center gap-4 w-full md:w-auto">
-              <div className="relative w-full md:w-64">
-                <input 
-                  type="text" 
-                  placeholder="Buscar modelo..." 
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full bg-gray-50 border border-[#021631]/10 rounded-sm py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-[#fcbc17] transition-colors"
-                />
-                <Search className="w-4 h-4 text-[#021631]/40 absolute left-3 top-1/2 -translate-y-1/2" />
-              </div>
-              <button className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-[#021631]/10 rounded-sm text-sm font-medium hover:border-[#fcbc17] transition-colors whitespace-nowrap">
-                <Filter className="w-4 h-4" /> Filtros
-              </button>
+      <div className="bg-white border-b border-[#021631]/10 sticky top-16 sm:top-20 md:top-24 z-40">
+        <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          {/* Search & Toggle */}
+          <div className="flex items-center gap-3">
+            <div className="relative flex-grow">
+              <input
+                type="text"
+                placeholder="Buscar modelo..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full bg-gray-50 border border-[#021631]/10 rounded-sm py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-[#fcbc17] transition-colors"
+              />
+              <Search className="w-4 h-4 text-[#021631]/40 absolute left-3 top-1/2 -translate-y-1/2" />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#021631]/40 hover:text-[#021631]"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
-            
-            <div className="flex items-center gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className={`flex items-center gap-2 px-3 sm:px-4 py-2 border rounded-sm text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${showFilters ? 'bg-[#fcbc17] border-[#fcbc17] text-[#021631]' : 'bg-gray-50 border-[#021631]/10 hover:border-[#fcbc17]'}`}
+            >
+              <Filter className="w-4 h-4" />
+              <span className="hidden sm:inline">Filtros</span>
+              {activeCategory !== 'TODOS' && <span className="w-2 h-2 rounded-full bg-[#fcbc17] sm:hidden" />}
+            </button>
+          </div>
+
+          {/* Category Filters — collapsible on mobile */}
+          {showFilters && (
+            <div className="mt-3 flex flex-wrap gap-2">
               {categories.map(cat => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 text-sm font-medium rounded-sm whitespace-nowrap transition-colors ${
+                  className={`px-3 py-1.5 text-xs sm:text-sm font-medium rounded-sm whitespace-nowrap transition-colors ${
                     activeCategory === cat
                       ? 'bg-[#fcbc17] text-[#021631] font-bold'
                       : 'bg-gray-50 border border-[#021631]/10 text-[#021631]/70 hover:border-[#fcbc17] hover:text-[#021631]'
@@ -61,40 +77,62 @@ export default function Estoque() {
                 </button>
               ))}
             </div>
+          )}
+
+          {/* Always visible on desktop */}
+          <div className="hidden md:flex items-center gap-3 mt-3">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2 text-sm font-medium rounded-sm whitespace-nowrap transition-colors ${
+                  activeCategory === cat
+                    ? 'bg-[#fcbc17] text-[#021631] font-bold'
+                    : 'bg-gray-50 border border-[#021631]/10 text-[#021631]/70 hover:border-[#fcbc17] hover:text-[#021631]'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Results Count */}
-      <div className="container mx-auto px-6 py-8">
-        <p className="text-[#021631] font-medium"><span className="font-bold text-lg">{filteredVehicles.length}</span> veículos</p>
+      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
+        <p className="text-[#021631] font-medium text-sm sm:text-base">
+          <span className="font-bold text-base sm:text-lg">{filteredVehicles.length}</span> veículos
+          {activeCategory !== 'TODOS' && (
+            <span className="ml-2 text-[#021631]/50">em <span className="text-[#fcbc17] font-semibold">{activeCategory}</span></span>
+          )}
+        </p>
       </div>
 
       {/* Grid */}
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {filteredVehicles.map((vehicle) => (
             <div key={vehicle.id} className="group bg-white border border-[#021631]/10 shadow-sm hover:border-[#fcbc17]/50 transition-colors flex flex-col h-full">
               <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
-                <img 
-                  src={vehicle.image} 
-                  alt={vehicle.model} 
+                <img
+                  src={vehicle.image}
+                  alt={vehicle.model}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <div className="p-6 flex flex-col flex-grow">
-                <h4 className="text-sm text-[#021631]/60 mb-1">{vehicle.brand}</h4>
-                <h3 className="text-lg font-bold mb-2 line-clamp-2">{vehicle.model}</h3>
-                <div className="flex items-center gap-2 text-xs text-[#021631]/60 font-medium mb-6">
+              <div className="p-3 sm:p-6 flex flex-col flex-grow">
+                <h4 className="text-xs text-[#021631]/60 mb-0.5">{vehicle.brand}</h4>
+                <h3 className="text-sm sm:text-lg font-bold mb-1 sm:mb-2 line-clamp-2 leading-tight">{vehicle.model}</h3>
+                <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-[#021631]/60 font-medium mb-3 sm:mb-6">
                   <span>{vehicle.year}</span>
-                  <span className="w-1 h-1 rounded-full bg-[#021631]/20"></span>
-                  <span>{vehicle.km}</span>
+                  <span className="w-1 h-1 rounded-full bg-[#021631]/20" />
+                  <span className="truncate">{vehicle.km}</span>
                 </div>
-                <div className="mt-auto flex items-end justify-between pt-4 border-t border-[#021631]/10">
-                  <span className="text-xl font-bold text-[#fcbc17]">{vehicle.price}</span>
-                  <a href="#" className="text-xs text-[#021631]/60 hover:text-[#021631] transition-colors flex items-center gap-1">
-                    <ChevronRight className="w-4 h-4" />
+                <div className="mt-auto flex items-end justify-between pt-3 border-t border-[#021631]/10">
+                  <span className="text-sm sm:text-xl font-bold text-[#fcbc17] leading-tight">{vehicle.price}</span>
+                  <a href="#" className="text-xs text-[#021631]/60 hover:text-[#021631] transition-colors flex items-center gap-0.5">
+                    <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
                   </a>
                 </div>
               </div>
@@ -103,8 +141,8 @@ export default function Estoque() {
         </div>
 
         {filteredVehicles.length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-[#021631]/50 text-lg">Nenhum veículo encontrado.</p>
+          <div className="text-center py-16 sm:py-20">
+            <p className="text-[#021631]/50 text-base sm:text-lg">Nenhum veículo encontrado.</p>
           </div>
         )}
       </div>
