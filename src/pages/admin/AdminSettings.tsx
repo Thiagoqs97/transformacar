@@ -17,6 +17,9 @@ export default function AdminSettings() {
     setSettings(prev => ({ ...prev, [field]: value }));
   };
 
+  const inputCls = "w-full bg-gray-50 border border-[#021631]/15 rounded-lg px-4 py-2.5 text-[#021631] text-sm focus:outline-none focus:border-[#fcbc17] focus:bg-white transition-colors";
+  const labelCls = "block text-[#021631]/50 text-xs font-bold uppercase tracking-wider mb-2";
+
   const sections = [
     {
       title: 'Estatísticas da Barra (Home)',
@@ -30,7 +33,7 @@ export default function AdminSettings() {
     },
     {
       title: 'Seção Veículo em Destaque',
-      description: 'Textos e números da seção "Veículo em Destaque" na Home.',
+      description: 'Textos exibidos na seção de destaque da Home.',
       fields: [
         { key: 'featuredVehicleTitle' as const, label: 'Título', placeholder: 'Conheça Nosso Showroom' },
         { key: 'featuredVehicleDescription' as const, label: 'Descrição', placeholder: 'Texto descritivo...', textarea: true },
@@ -51,7 +54,7 @@ export default function AdminSettings() {
     },
     {
       title: 'Google Maps',
-      description: 'Links e embed do Google Maps para localização da loja.',
+      description: 'Links e embed do Google Maps.',
       fields: [
         { key: 'googleMapsUrl' as const, label: 'Link do Google Maps', placeholder: 'https://maps.app.goo.gl/...' },
         { key: 'googleMapsEmbed' as const, label: 'URL do Embed (iframe)', placeholder: 'https://www.google.com/maps/embed?...' },
@@ -59,7 +62,7 @@ export default function AdminSettings() {
     },
     {
       title: 'Redes Sociais',
-      description: 'Links e contadores das redes sociais.',
+      description: 'Links e contadores das redes sociais no footer.',
       fields: [
         { key: 'instagramUrl' as const, label: 'URL Instagram', placeholder: 'https://instagram.com/...' },
         { key: 'instagramFollowers' as const, label: 'Seguidores Instagram', placeholder: '150k seguidores' },
@@ -71,10 +74,10 @@ export default function AdminSettings() {
     },
     {
       title: 'Avaliações Google',
-      description: 'Informações sobre as avaliações do Google exibidas nos depoimentos.',
+      description: 'Informações sobre as avaliações no Google.',
       fields: [
-        { key: 'googleReviewRating' as const, label: 'Nota das Avaliações', placeholder: '4.8' },
-        { key: 'googleReviewCount' as const, label: 'Número de Avaliações', placeholder: '833+' },
+        { key: 'googleReviewRating' as const, label: 'Nota', placeholder: '4.8' },
+        { key: 'googleReviewCount' as const, label: 'Nº de Avaliações', placeholder: '833+' },
         { key: 'googleReviewsUrl' as const, label: 'Link das Avaliações', placeholder: 'https://...' },
       ]
     },
@@ -84,46 +87,32 @@ export default function AdminSettings() {
     <div className="space-y-6 max-w-4xl">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Configurações do Site</h2>
-          <p className="text-white/50 text-sm">Edite textos, estatísticas, contato e redes sociais.</p>
+          <h2 className="text-2xl font-bold text-[#021631]">Configurações do Site</h2>
+          <p className="text-[#021631]/50 text-sm">Edite textos, estatísticas, contato e redes sociais.</p>
         </div>
-        <button
-          onClick={handleSave}
-          disabled={saved}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg ${
-            saved
-              ? 'bg-green-500 text-white shadow-green-500/20'
-              : 'bg-[#fcbc17] text-[#021631] hover:bg-[#fcbc17]/90 shadow-[#fcbc17]/20'
-          }`}
-        >
+        <button onClick={handleSave} disabled={saved}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md ${
+            saved ? 'bg-green-500 text-white' : 'bg-[#fcbc17] text-[#021631] hover:bg-[#fcbc17]/90'
+          }`}>
           {saved ? <><Check className="w-4 h-4" /> Salvo!</> : <><Save className="w-4 h-4" /> Salvar Alterações</>}
         </button>
       </div>
 
       {sections.map((section, idx) => (
-        <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-white/20 transition-colors">
-          <h3 className="text-white font-bold text-lg mb-1">{section.title}</h3>
-          <p className="text-white/40 text-sm mb-6">{section.description}</p>
+        <div key={idx} className="bg-white border border-[#021631]/10 rounded-xl p-6 shadow-sm hover:border-[#fcbc17]/40 transition-colors">
+          <h3 className="text-[#021631] font-bold text-lg mb-1">{section.title}</h3>
+          <p className="text-[#021631]/40 text-sm mb-6">{section.description}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {section.fields.map(field => (
-              <div key={field.key} className={('textarea' in field && field.textarea) ? 'sm:col-span-2' : ''}>
-                <label className="block text-white/60 text-xs font-bold uppercase tracking-wider mb-2">{field.label}</label>
+              <div key={field.key} className={'textarea' in field && field.textarea ? 'sm:col-span-2' : ''}>
+                <label className={labelCls}>{field.label}</label>
                 {'textarea' in field && field.textarea ? (
-                  <textarea
-                    value={settings[field.key]}
-                    onChange={e => update(field.key, e.target.value)}
-                    rows={3}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#fcbc17] transition-colors resize-none"
-                    placeholder={field.placeholder}
-                  />
+                  <textarea value={settings[field.key]} onChange={e => update(field.key, e.target.value)} rows={3}
+                    className="w-full bg-gray-50 border border-[#021631]/15 rounded-lg px-4 py-2.5 text-[#021631] text-sm focus:outline-none focus:border-[#fcbc17] focus:bg-white transition-colors resize-none"
+                    placeholder={field.placeholder} />
                 ) : (
-                  <input
-                    type="text"
-                    value={settings[field.key]}
-                    onChange={e => update(field.key, e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#fcbc17] transition-colors"
-                    placeholder={field.placeholder}
-                  />
+                  <input type="text" value={settings[field.key]} onChange={e => update(field.key, e.target.value)}
+                    className={inputCls} placeholder={field.placeholder} />
                 )}
               </div>
             ))}
